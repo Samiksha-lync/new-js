@@ -19,14 +19,13 @@ function saveToStorage() {
 export function addToCart(productId) {
     let matchingItem;
 
-    // Find if the item is already in the cart
+    
     cart.forEach((cartItem) => {
         if (productId === cartItem.productId) {
             matchingItem = cartItem;
         }
     });
 
-    // Update quantity or add a new item
     if (matchingItem) {
         matchingItem.quantity += 1;
     } else {
@@ -37,16 +36,28 @@ export function addToCart(productId) {
         });
     }
 
-    // Save the updated cart to localStorage
     saveToStorage();
 }
 
 export function removeFromCart(productId) {
-    // Filter out the item to remove
     const newCart = cart.filter((cartItem) => cartItem.productId !== productId);
 
     cart = newCart;
 
     // Save the updated cart to localStorage
+    saveToStorage();
+}
+
+export function updateDeliveryOption(productId, deliveryOptionId){
+    let matchingItem;
+
+    cart.forEach((cartItem) => {
+        if (productId === cartItem.productId){
+            matchingItem = cartItem;
+        }
+    });
+
+    matchingItem.deliveryOptionId = deliveryOptionId;
+
     saveToStorage();
 }
